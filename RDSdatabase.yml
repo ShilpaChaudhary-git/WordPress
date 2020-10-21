@@ -1,0 +1,20 @@
+MyDB:
+  Type: AWS::RDS::DBInstance
+  Properties:
+    DBSecurityGroups:
+    - Ref: MyDbSecurityByEC2SecurityGroup
+    - Ref: MyDbSecurityByCIDRIPGroup
+    AllocatedStorage: '5'
+    DBInstanceClass: db.t2.small
+    Engine: MySQL
+    MasterUsername: MyName
+    MasterUserPassword: MyPassword
+  DeletionPolicy: Snapshot
+
+MyDbSecurityByCIDRIPGroup:
+  Type: AWS::RDS::DBSecurityGroup
+  Properties:
+    GroupDescription: Ingress for CIDRIP
+    DBSecurityGroupIngress:
+      CIDRIP: "192.168.0.0/32"
+      
