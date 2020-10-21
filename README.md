@@ -1,0 +1,2 @@
+# WordPress
+WordPress multiAZ installation
