@@ -1,16 +1,42 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description : Basic EC2 Instance.
 
+
+Parameters:
+  MyKeyname:
+    Description: Select the key from the list
+    Type: AWS::EC2::KeyPair::KeyName
+  
+  MyAvailabilityZone:
+    Description: Select the AZ
+    Type : String
+    Default: us-east-2a
+    AllowedValues:
+      - us-east-2a
+      - us-east-2b
+
+  MyInstanceType:
+    Description : Select EC2 instance type from
+    Type : String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+
+
 Resources:
   DevEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-027cab9a7bf0155df
-      InstanceType: t2.micro
-      KeyName : cfn-key-1
+      InstanceType: !Ref MyInstanceType
+      KeyName : !Ref MyKeyname
       SecurityGroups:
         - default
         - !Ref SSHSecurityGroup
+      AvailabilityZone: !Ref MyAvailabilityZone
+  
+  
   SSHSecurityGroup:
     Type : AWS::EC2::SecurityGroup
     Properties:
